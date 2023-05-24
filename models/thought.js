@@ -1,4 +1,6 @@
-const thoughtSchema = new mongoose.Schema({
+const { Schema, model } = require('mongoose');
+
+const thoughtSchema = new Schema({
     thoughtText: {
       type: String,
       required: true,
@@ -27,8 +29,11 @@ const thoughtSchema = new mongoose.Schema({
       },
     }],
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User',
     },
   });
+
+  const Thought = model('Thought', thoughtSchema);
+  module.exports = Thought;
   

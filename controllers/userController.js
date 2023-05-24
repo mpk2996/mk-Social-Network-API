@@ -28,7 +28,7 @@ module.exports = {
 
     // PUT /api/users/:id
     updateUser(req, res) {
-        User.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        User.findByIdAndUpdate(req.params.userId, req.body, { new: true })
             .then((user) => {
                 if (!user) {
                     return res.status(404).json({ message: 'No user found with this id.' });
@@ -44,10 +44,10 @@ module.exports = {
             .then((user) => {
                 !user
                     ? res.status(404).json({ message: 'No user found with that id.' })
-                    : res.json(user)
+                    : Thought.deleteMany({ username: user.username });
 
                 // Remove user's associated thoughts
-                return Thought.deleteMany({ username: user.username });
+                
             })
             .then(() => res.json({ message: 'User and associated thoughts deleted successfully.' }))
             .catch((err) => res.status(500).json(err));
